@@ -13,9 +13,10 @@
         $direccion=$_POST['direccion'];
         $tipo_propiedad=$_POST['tipo_propiedad'];
         $precio=$_POST['precio'];
+        $estado=$_POST['estado'];
 
         
-        $sql="UPDATE propiedades SET direccion='".$direccion."' ,tipo_propiedad='".$tipo_propiedad."',precio='".$precio."' WHERE id_propiedades ='".$id_propiedades."'";
+        $sql="UPDATE propiedades SET direccion='".$direccion."' ,tipo_propiedad='".$tipo_propiedad."',precio='".$precio."',estado='".$estado."' WHERE id_propiedades ='".$id_propiedades."'";
 
         $reultado=mysqli_query($conexion, $sql);
         if ($reultado) {
@@ -39,13 +40,14 @@
     }else{
      $id_propiedades=$_GET['id_propiedades'];
      echo ".$id.";
-     $sql= "SELECT direccion,tipo_propiedad, precio FROM propiedades WHERE id_propiedades='".$id_propiedades."'";
+     $sql= "SELECT direccion,tipo_propiedad, precio, estado FROM propiedades WHERE id_propiedades='".$id_propiedades."'";
      $resultado = mysqli_query($conexion,$sql);
 
      $fila=mysqli_fetch_assoc($resultado);
      $direccion=$fila['direccion'];
      $tipo_propiedad=$fila['tipo_propiedad'];
      $precio=$fila['precio'];
+     $estado =$fila['estado'];
     
     
     ?>
@@ -60,6 +62,12 @@
 
     <label>Precio</label>
     <input type="text" name="precio" value="<?php echo $precio; ?>"><br><br>
+
+    <label for="estado">Selecciona un estado:</label>
+        <select name="estado" value="<?php echo $estado; ?>" >
+            <option value="activo" <?php if ($fila['estado'] == 'activo') echo 'selected'; ?>>Activo</option>
+                <option value="inactivo" <?php if ($fila['estado'] == 'inactivo') echo 'selected'; ?>>Inactivo</option>
+        </select>
 
     <input type="hidden" name="idpropiedades" value="<?php echo $id_propiedades; ?>"><br><br>
     
@@ -77,4 +85,3 @@
 <?php
 include("piePagina.php");
 ?>
-
