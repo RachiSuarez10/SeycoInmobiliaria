@@ -42,7 +42,7 @@
 
 } else{
 
-    $sql= "SELECT id_propiedades, direccion FROM propiedades";
+    $sql= "SELECT id_propiedades, direccion FROM propiedades WHERE estado = 'Activo'";
     $resultado = mysqli_query($conexion,$sql);
 
     $sql2= "SELECT id_cliente, nombre_completo_cliente FROM cliente";
