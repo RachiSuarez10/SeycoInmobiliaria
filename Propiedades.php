@@ -36,7 +36,7 @@
                 <td><?php echo $fila['id_propiedades']?></td>
                 <td><?php echo $fila['direccion']?></td>
                 <td><?php echo $fila['tipo_propiedad']?></td>
-                <td><?php echo $fila['precio']?></td><td>
+                <td><?php echo $fila['precio']?></td>
                 <td><?php echo $fila['estado']?></td><td>
 
                     <?php echo "<a href='EditarPropiedad.php?id_propiedades=".$fila['id_propiedades']."'>Editar</a>"; ?>
