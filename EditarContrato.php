@@ -32,6 +32,10 @@
             alert('No se puede realizar el contrato por que la propiedad esta inactiva');
             window.location.assign('Contratos.php'); // Corregido location.assign
             </script>";
+            /*
+            lo que tengo que hacer es validar si el usuario que quiere activar y desactivar sea 
+            el mismo que tenga asignado la propiead para que le permita activar y desactivar 
+             */
         }else if($estadoPropiedad == 'Activo'){
 
         $sql="UPDATE contratos SET id_propiedades='".$id_propiedad."' ,id_cliente='".$id_cliente."',fecha_inicio='".$fecha_inicio."',fecha_finalizacion='".$fecha_fin."',monto_contrato='".$monto_contrato."',estado_contrato='".$estado."' WHERE id_contrato ='".$id_contrato."'";
