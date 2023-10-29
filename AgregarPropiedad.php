@@ -6,11 +6,12 @@
             $direccion=$_POST['direccion'];
             $tipo_propiedad=$_POST['tipo_propiedad'];
             $precio=$_POST['precio'];
+            $estado = $_POST['estado'];
 
             include("Conexion.php");
             
-            $sql="INSERT INTO propiedades(direccion,tipo_propiedad, precio)
-            VALUES('$direccion', '$tipo_propiedad', '$precio')";
+            $sql="INSERT INTO propiedades(direccion,tipo_propiedad, precio, estado)
+            VALUES('$direccion', '$tipo_propiedad', '$precio', '$estado')";
 
             $reultado=mysqli_query($conexion, $sql);
             if ($reultado) {
