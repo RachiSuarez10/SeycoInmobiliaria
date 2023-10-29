@@ -20,6 +20,8 @@
             $reultado3=mysqli_query($conexion, $sql3);
             if ($reultado3) {
 
+                $sql="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
+                $reultado=mysqli_query($conexion, $sql);
                 echo "<script language='JavaScript'>
             alert('El contrato se agrego con éxito');
             window.location.assign('Contratos.php'); // Corregido location.assign
@@ -55,21 +57,22 @@
     <h1>Agregar contrato</h1>
     <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 
-    <label>Propiedad</label>
-    <select name="seleccionarPropiedad">
-        <?php
-        while($row = $resultado->fetch_assoc()) {
-            echo "<option value='".$row['id_propiedades']."'>".$row['direccion']. "</option>";
-            
-        }
-        ?>
-    </select><br><br>
 
     <label>Cliente</label>
     <select name="seleccionarCliente">
         <?php
         while($row = $resultado2->fetch_assoc()) {
             echo "<option value='".$row['id_cliente']."'>".$row['nombre_completo_cliente']. "</option>";
+            
+        }
+        ?>
+    </select><br><br>
+    
+    <label>Propiedad</label>
+    <select name="seleccionarPropiedad">
+        <?php
+        while($row = $resultado->fetch_assoc()) {
+            echo "<option value='".$row['id_propiedades']."'>".$row['direccion']. "</option>";
             
         }
         ?>

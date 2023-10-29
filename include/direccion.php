@@ -7,7 +7,9 @@ $sql = "SELECT  c.id_propiedades, p.direccion
 FROM contratos as c
 JOIN propiedades as p ON c.id_propiedades = p.id_propiedades
 JOIN cliente as cl ON c.id_cliente = cl.id_cliente
-WHERE cl.id_cliente ='$id_cliente.' ORDER BY nombre_completo_cliente ASC ";
+WHERE cl.id_cliente ='$id_cliente.' 
+AND estado_contrato = 'Activo'
+ORDER BY nombre_completo_cliente ASC ";
 
 $resultado = mysqli_query($conexion, $sql);
 

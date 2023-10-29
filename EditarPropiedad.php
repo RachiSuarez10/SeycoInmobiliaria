@@ -66,7 +66,7 @@
     <label for="estado">Selecciona un estado:</label>
         <select name="estado" value="<?php echo $estado; ?>" >
             <option value="activo" <?php if ($fila['estado'] == 'activo') echo 'selected'; ?>>Activo</option>
-                <option value="inactivo" <?php if ($fila['estado'] == 'inactivo') echo 'selected'; ?>>Inactivo</option>
+            <option value="inactivo" <?php if ($fila['estado'] == 'inactivo') echo 'selected'; ?>>Inactivo</option>
         </select>
 
     <input type="hidden" name="idpropiedades" value="<?php echo $id_propiedades; ?>"><br><br>

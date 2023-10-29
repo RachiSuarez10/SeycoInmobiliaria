@@ -20,8 +20,7 @@
 
             $fila=mysqli_fetch_assoc($reultadoc);
             $id_contrato=$fila['id_contrato'];
-            echo "contratos ";
-            echo "$id_contrato";
+          
 
 
             
