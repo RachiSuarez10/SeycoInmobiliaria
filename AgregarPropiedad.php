@@ -49,6 +49,12 @@
     <label>Precio</label>
     <input type="text" name="precio"><br><br>
 
+    <label for="estado">Selecciona un estado:</label>
+        <select name="estado" id="estado">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+        </select>
+
     <button type="submit" name="enviar"> agregar</button>
 
     <a href="Cliente.php">regresar</a>
