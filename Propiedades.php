@@ -6,7 +6,7 @@
     
 
     include("Conexion.php");
-    $sql="SELECT id_propiedades, direccion,tipo_propiedad, precio FROM propiedades";
+    $sql="SELECT id_propiedades, direccion,tipo_propiedad, precio, estado FROM propiedades";
 
     $resultado = mysqli_query($conexion, $sql);
 
@@ -24,6 +24,7 @@
                 <th>direccion</th>
                 <th>tipo de propiedad</th>
                 <th>precio</th>
+                <th>estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td><?php echo $fila['direccion']?></td>
                 <td><?php echo $fila['tipo_propiedad']?></td>
                 <td><?php echo $fila['precio']?></td><td>
+                <td><?php echo $fila['estado']?></td><td>
 
                     <?php echo "<a href='EditarPropiedad.php?id_propiedades=".$fila['id_propiedades']."'>Editar</a>"; ?>
                     -
