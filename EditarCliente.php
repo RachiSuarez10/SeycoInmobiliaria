@@ -37,7 +37,7 @@ include("Conexion.php");
     }else{
      $id_cliente=$_GET['id_cliente'];
      echo ".$id.";
-     $sql= "SELECT id_cliente, nombre_completo_cliente, email, telefono FROM cliente WHERE id_cliente='".$id_cliente."'";
+     $sql= "SELECT  nombre_completo_cliente, email, telefono FROM cliente WHERE id_cliente='".$id_cliente."'";
      $resultado = mysqli_query($conexion,$sql);
 
      $fila=mysqli_fetch_assoc($resultado);
