@@ -1,10 +1,8 @@
 <?php include("cabecera.php");
-    include("Conexion.php"); ?>
+        include("Conexion.php"); ?>
 
     <?php
     
-
-    include("Conexion.php");
     if(isset($_POST['enviar'])){
         //aqui entra cuando preciona el voton enviar
         $id_contrato=$_POST['id_contrato'];
@@ -15,68 +13,159 @@
         $monto_contrato=$_POST['monto_contrato'];
         $estado=$_POST['estado'];
 
-        if ($estado == 'Activo') {
-            # code...
-        }else if ($estado == 'Inactivo') {
-            # code...
-        }
-        $consultarEstadoPropiedad = "SELECT estado FROM propiedades WHERE id_propiedades ='".$id_propiedad."'";
-
-        $resultadoEstadoPropiedad = mysqli_query($conexion,$consultarEstadoPropiedad);
+       
         
-        $resulEstadoPropiedad=mysqli_fetch_assoc($resultadoEstadoPropiedad);
-        $estadoPropiedad=$resulEstadoPropiedad['estado'];
-        
-        if($estadoPropiedad == 'Inactivo'){
-            echo "<script language='JavaScript'>
-            alert('No se puede realizar el contrato por que la propiedad esta inactiva');
-            window.location.assign('Contratos.php'); // Corregido location.assign
-            </script>";
-            /*
-            lo que tengo que hacer es validar si el usuario que quiere activar y desactivar sea 
-            el mismo que tenga asignado la propiead para que le permita activar y desactivar 
-             */
-        }else if($estadoPropiedad == 'Activo'){
-
-        $sql="UPDATE contratos SET id_propiedades='".$id_propiedad."' ,id_cliente='".$id_cliente."',fecha_inicio='".$fecha_inicio."',fecha_finalizacion='".$fecha_fin."',monto_contrato='".$monto_contrato."',estado_contrato='".$estado."' WHERE id_contrato ='".$id_contrato."'";
-
-
-        $reultado=mysqli_query($conexion, $sql);
-        if ($reultado) {
-            
-
-            
-        if ($estado == "Inactivo") {
-
-            $sql2="UPDATE propiedades SET estado='Activo' WHERE id_propiedades ='".$id_propiedad."'";
-            $reultado2=mysqli_query($conexion, $sql2);
-            
-
-        }else if(($estado == "Activo")){
-            $sql2="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
-            $reultado2=mysqli_query($conexion, $sql2);
-
-           
-        }
-        
-
-            echo "<script language='JavaScript'>
-            alert('El cliente se actualizo con éxito');
-            window.location.assign('Contratos.php'); // Corregido location.assign
-            </script>";
-            
     
-        }else{
-            
-            echo "<script language='JavaScript'>
-            alert('EError al actualizar cliente');
+        $ConsultarEstadoContrato= "SELECT  estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
+        $resultadoEstadoContrato = mysqli_query($conexion,$ConsultarEstadoContrato);
+        $filaEstadoContrato=mysqli_fetch_assoc($resultadoEstadoContrato);
+
+        $estado_contrato=$filaEstadoContrato['estado_contrato'];
+        
+
+        if($estado_contrato == $estado){
+
+            $actualizarContrato = "UPDATE contratos SET id_propiedades='".$id_propiedad."' ,id_cliente='".$id_cliente."',fecha_inicio='".$fecha_inicio."',fecha_finalizacion='".$fecha_fin."',monto_contrato='".$monto_contrato."' WHERE id_contrato ='".$id_contrato."'";
+
+            $resultadoContrato=mysqli_query($conexion, $actualizarContrato);
+            $reultado=mysqli_query($conexion, $sql);
+            if ($resultadoContrato) {
+
+                echo "<script language='JavaScript'>
+                alert('El contrato se actualizo con éxito');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+
+                
+                }else{
+
+                    
+
+                    echo "<script language='JavaScript'>
+            alert('El contrato no se actualizo con éxito');
             window.location.assign('Contratos.php'); // Corregido location.assign
             </script>";
+
+                }
+         
+   
+                mysqli_close($conexion);
+    }else{
+
+        if($estado == "Activo"){
+
+            
+            $sqlidPropiedad= "SELECT  id_propiedades FROM contratos WHERE id_contrato='".$id_contrato."'";
+
+            $resultadoidPropiedad = mysqli_query($conexion,$sqlidPropiedad);
+
+            $filaresultadoidPropiedad=mysqli_fetch_assoc($resultadoidPropiedad);
+            $propiedad=$filaresultadoidPropiedad['id_propiedades'];
+
+            $consultarEstadoPropiedad = "SELECT estado FROM propiedades WHERE id_propiedades ='".$propiedad."'";
+
+            $resultadoEstadoPropiedad = mysqli_query($conexion,$consultarEstadoPropiedad);
+        
+            $resulEstadoPropiedad=mysqli_fetch_assoc($resultadoEstadoPropiedad);
+            $estadoPropiedad=$resulEstadoPropiedad['estado'];
+
+            if($estadoPropiedad== 'Activo'){
+
+                $actualizarContratoActivo="UPDATE contratos SET id_propiedades='".$id_propiedad."' ,id_cliente='".$id_cliente."',fecha_inicio='".$fecha_inicio."',fecha_finalizacion='".$fecha_fin."',monto_contrato='".$monto_contrato."',estado_contrato='".$estado."' WHERE id_contrato ='".$id_contrato."'";
+
+                $reultadoContratoActivo=mysqli_query($conexion, $actualizarContratoActivo);
+    
+                if ($reultadoContratoActivo) {
+    
+                        $sql2="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
+                        $resultado2=mysqli_query($conexion, $sql2);
+                        if ($resultado2) {
+                            echo "<script language='JavaScript'>
+                            alert('el estado de propiedad cambio a inactivo');
+                            window.location.assign('Contratos.php'); // Corregido location.assign
+                            </script>";
+                        }else{
+                            echo "<script language='JavaScript'>
+                        alert('el estado de propiedad  no cambio cambio a inactivo');
+                        window.location.assign('Contratos.php'); // Corregido location.assign
+                        </script>";
+                        }
+        
+    
+                        echo "<script language='JavaScript'>
+                alert('se actualizar cliente en la validacion 2');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+                    
+                    }else{
+    
+                        echo "<script language='JavaScript'>
+                alert('Error al actualizar cliente ');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+                    }
+             
+       
+                    mysqli_close($conexion);
+
+            }else if($estadoPropiedad == "Inactivo"){
+
+                echo "<script language='JavaScript'>
+                alert('No se puede realizar el contrato por que la propiedad esta inactiva');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+
+
+            }
+
+            mysqli_close($conexion);
+
+        }else {
+
+            $actualizarContratoInactivo="UPDATE contratos SET id_propiedades='".$id_propiedad."' ,id_cliente='".$id_cliente."',fecha_inicio='".$fecha_inicio."',fecha_finalizacion='".$fecha_fin."',monto_contrato='".$monto_contrato."',estado_contrato='".$estado."' WHERE id_contrato ='".$id_contrato."'";
+
+            $reultadoContratoInactivo=mysqli_query($conexion, $actualizarContratoInactivo);
+            if ($reultadoContratoInactivo) {
+    
+                $sql3="UPDATE propiedades SET estado='Activo' WHERE id_propiedades ='".$id_propiedad."'";
+                $resultado3=mysqli_query($conexion, $sql3);
+                if ($resultado3) {
+                    echo "<script language='JavaScript'>
+                    alert('el estado de propiedad cambio a activo');
+                    window.location.assign('Contratos.php'); // Corregido location.assign
+                    </script>";
+                }else{
+                    echo "<script language='JavaScript'>
+                alert('el estado de propiedad  no cambio cambio a activo');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+                }
+
+
+                echo "<script language='JavaScript'>
+                alert('El cliente se actualizo con éxito');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+            
+            }else{
+
+                echo "<script language='JavaScript'>
+                alert('Error al actualizar cliente en la validacion 2');
+                window.location.assign('Contratos.php'); // Corregido location.assign
+                </script>";
+            }
+
+            mysqli_close($conexion);
+
         }
 
         mysqli_close($conexion);
+
+
     }
+
     }else{
+
      $id_contrato=$_GET['id_contrato'];
      echo ".$id.";
      $sql= "SELECT  fecha_inicio, fecha_finalizacion, monto_contrato, estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
@@ -96,7 +185,7 @@
     $sql2= "SELECT id_cliente, nombre_completo_cliente FROM cliente";
     $resultado2 = mysqli_query($conexion,$sql2);
     
-    
+    mysqli_close($conexion);
     ?>
 <h1>Editar contrato</h1>
     <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
