@@ -20,8 +20,14 @@
             $reultado3=mysqli_query($conexion, $sql3);
             if ($reultado3) {
 
-                $sql="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
-                $reultado=mysqli_query($conexion, $sql);
+                if($estado == "Activo") {
+
+                    $sql="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
+                    $reultado=mysqli_query($conexion, $sql);
+                
+                }
+
+                
                 echo "<script language='JavaScript'>
             alert('El contrato se agrego con éxito');
             window.location.assign('Contratos.php'); // Corregido location.assign
@@ -88,7 +94,11 @@
     <input type="text" name="monto_contrato"><br><br>
 
     <label>Estado</label>
-    <input type="text" name="estado"><br><br>
+    <label for="estado">Selecciona un estado:</label>
+        <select name="estado" id="estado">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+        </select>
 
    
     <button type="submit" name="enviar"> agregar</button>

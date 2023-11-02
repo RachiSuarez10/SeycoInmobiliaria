@@ -16,11 +16,12 @@
        
         
     
-        $ConsultarEstadoContrato= "SELECT  estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
+        $ConsultarEstadoContrato= "SELECT  id_propiedades,estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
         $resultadoEstadoContrato = mysqli_query($conexion,$ConsultarEstadoContrato);
         $filaEstadoContrato=mysqli_fetch_assoc($resultadoEstadoContrato);
 
         $estado_contrato=$filaEstadoContrato['estado_contrato'];
+        $id_propiedadActual=$filaEstadoContrato['id_propiedades'];
         
 
         if($estado_contrato == $estado){
@@ -29,12 +30,41 @@
 
             $resultadoContrato=mysqli_query($conexion, $actualizarContrato);
             $reultado=mysqli_query($conexion, $sql);
+
             if ($resultadoContrato) {
 
-                echo "<script language='JavaScript'>
-                alert('El contrato se actualizo con éxito');
-                window.location.assign('Contratos.php'); // Corregido location.assign
-                </script>";
+               
+                   
+
+                    $ActualizarEstado="UPDATE propiedades SET estado='Activo' WHERE id_propiedades ='".$id_propiedadActual."'";
+                    $Actualizado=mysqli_query($conexion, $ActualizarEstado);
+                    if ($Actualizado) {
+                      
+                    }else
+                    {
+                        echo "<script language='JavaScript'>
+                    alert('Ocurrio un error al altualizar el estado a Activo de la propiedad id'.$propiedad);
+                    window.location.assign('Contratos.php'); // Corregido location.assign
+                    </script>";
+                    }
+
+                    $ActualizarEstado="UPDATE propiedades SET estado='Inactivo' WHERE id_propiedades ='".$id_propiedad."'";
+                    $Actualizado=mysqli_query($conexion, $ActualizarEstado);
+                    if ($Actualizado) {
+                        
+                    }else
+                    {
+                            echo "<script language='JavaScript'>
+                        alert('Ocurrio un error al altualizar el estado a Inactivo de la propiedad id'.$id_propiedad);
+                        window.location.assign('Contratos.php'); // Corregido location.assign
+                        </script>";
+                    }
+
+
+                    echo "<script language='JavaScript'>
+                    alert('El contrato se actualizo con éxito');
+                    window.location.assign('Contratos.php'); // Corregido location.assign
+                    </script>";
 
                 
                 }else{
@@ -168,15 +198,17 @@
 
      $id_contrato=$_GET['id_contrato'];
      echo ".$id.";
-     $sql= "SELECT  fecha_inicio, fecha_finalizacion, monto_contrato, estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
+     $sql= "SELECT  id_propiedades, fecha_inicio, fecha_finalizacion, monto_contrato, estado_contrato FROM contratos WHERE id_contrato='".$id_contrato."'";
      $resultado = mysqli_query($conexion,$sql);
 
      $fila=mysqli_fetch_assoc($resultado);
+     $idPropiedades = $fil['id_propiedades'];
      $fecha_inicio=$fila['fecha_inicio'];
      $fecha_fin=$fila['fecha_finalizacion'];
      $monto_contrato=$fila['monto_contrato'];
      $estado_contrato=$fila['estado_contrato'];
-
+    
+    echo "$idPropiedades";
 
      //para mostrar en combobox
     $sql1= "SELECT id_propiedades, direccion FROM propiedades";
@@ -244,7 +276,8 @@
     $id_propiedad_actual = $filaContrato['id_propiedades'];
 
     // Recupera todos los nombres de los clientes
-    $consultaClientes = $conexion->query("SELECT id_propiedades, direccion FROM propiedades");
+     $idDireccion = $fil['id_propiedades'];
+    $consultaClientes = $conexion->query("SELECT id_propiedades, direccion FROM propiedades  WHERE estado = 'Activo'  OR id_propiedades ='".$id_propiedad_actual."'");
 
     // Itera a través de los resultados y agrega opciones al combo box
     while ($fila = $consultaClientes->fetch_assoc()) {
