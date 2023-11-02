@@ -18,7 +18,7 @@ $resultado = mysqli_query($conexion, $sql);
 
 </div>
 
-<h1>Lista de ingresos mensuales</h1>
+
 
 <table>
     <thead>
@@ -30,6 +30,8 @@ $resultado = mysqli_query($conexion, $sql);
     </thead>
     <tbody>
         <?php
+        if (mysqli_num_rows($resultado) > 0) {
+        
         while($fila = mysqli_fetch_assoc($resultado)){
         ?>
         <tr>
@@ -43,6 +45,14 @@ $resultado = mysqli_query($conexion, $sql);
         <?php
 
         }
+        }else{
+           ?>
+           <div class="alert alert-primary" role="alert">
+            No se encontraron ingresos
+            </div>
+            <?php
+        }
+        
 
         ?>
     </tbody>

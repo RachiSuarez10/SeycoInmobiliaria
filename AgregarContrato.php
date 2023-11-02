@@ -96,8 +96,8 @@
     <label>Estado</label>
     <label for="estado">Selecciona un estado:</label>
         <select name="estado" id="estado">
-            <option value="activo">Activo</option>
-            <option value="inactivo">Inactivo</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
         </select>
 
    
